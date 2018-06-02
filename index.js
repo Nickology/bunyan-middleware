@@ -51,6 +51,10 @@ module.exports = function (options, logger) {
         , remotePort: req.connection.remotePort
         }
     }
+    
+    if (req.sessionID) {
+	    obj.sessionID = req.sessionID;
+    }
 
     if (obj.headers && (obscureHeaders || excludeHeaders)) {
       obj.headers = Object.keys(obj.headers).reduce(function(memo, name) {
@@ -92,7 +96,7 @@ module.exports = function (options, logger) {
     var prefs = {}
     prefs[logName] = id
     req.log = res.log = logger.child(prefs, true)
-
+	
     req[propertyName] = res[propertyName] = id
     res.setHeader(headerName, id)
 
